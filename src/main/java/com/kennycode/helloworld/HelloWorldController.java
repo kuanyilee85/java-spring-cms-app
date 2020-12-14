@@ -1,4 +1,4 @@
-package com.kennycode;
+package com.kennycode.helloworld;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +21,13 @@ public class HelloWorldController {
     }
 
     @GetMapping(path = "/hello-world-bean")
-    public HelloWorldBean helloWorldBean(){
-        return new HelloWorldBean("Hello World Bean");
+    public com.kennycode.helloworld.HelloWorldBean helloWorldBean(){
+        return new com.kennycode.helloworld.HelloWorldBean("Hello World Bean");
     }
 
     @GetMapping(path = "/hello-world/path-variable/{name}")
-    public HelloWorldBean helloWorldPathVariable(@PathVariable String name){
-        return new HelloWorldBean(String.format("Hello World, %s",name));
+    public com.kennycode.helloworld.HelloWorldBean helloWorldPathVariable(@PathVariable String name){
+        return new com.kennycode.helloworld.HelloWorldBean(String.format("Hello World, %s",name));
 //        throw new RuntimeException("Something wrong");
     }
 }

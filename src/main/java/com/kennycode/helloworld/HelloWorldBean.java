@@ -1,4 +1,4 @@
-package com.kennycode;
+package com.kennycode.helloworld;
 
 public class HelloWorldBean {
     private String message;
