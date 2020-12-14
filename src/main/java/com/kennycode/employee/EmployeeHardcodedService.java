@@ -20,4 +20,24 @@ public class EmployeeHardcodedService {
     public List<Employee> findAll() {
         return employees;
     }
+
+    public Employee deleteById(long id) {
+        Employee employee = findById(id);
+
+        if(employee == null) return null;
+
+        if(employees.remove(employee)) {
+            return employee;
+        }
+        return null;
+    }
+
+    public Employee findById(long id) {
+        for(Employee employee:employees) {
+            if(employee.getId() == id) {
+                return employee;
+            }
+        }
+        return null;
+    }
 }

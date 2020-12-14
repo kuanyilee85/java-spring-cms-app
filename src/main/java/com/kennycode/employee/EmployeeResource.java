@@ -1,10 +1,8 @@
 package com.kennycode.employee;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,4 +18,16 @@ public class EmployeeResource {
     public List<Employee> getAllEmployees(@PathVariable String username){
         return employeeService.findAll();
     }
+
+    // DELETE /users/{user_name}/employees/{id}
+    @DeleteMapping("/users/{username}/employees/{id}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable String username, @PathVariable long id) {
+        Employee employee = employeeService.deleteById(id);
+
+        if(employee != null) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 }

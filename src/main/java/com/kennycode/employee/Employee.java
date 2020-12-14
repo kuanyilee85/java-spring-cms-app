@@ -87,4 +87,17 @@ public class Employee {
     public void setOnBoard(boolean onBoard) {
         isOnBoard = onBoard;
     }
+
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Employee employee = (Employee) o;
+
+        return id == employee.id;
+    }
+
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
+    }
 }
