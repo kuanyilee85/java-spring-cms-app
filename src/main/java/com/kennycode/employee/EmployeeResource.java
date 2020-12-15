@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -39,11 +41,25 @@ public class EmployeeResource {
         return ResponseEntity.notFound().build();
     }
 
-    // Update /Update an employee
+    // Update an employee
     // PUT /users/{username}/employees/{id}
     @PutMapping("/users/{username}/employees/{id}")
-    public ResponseEntity<Employee> deleteEmployee(@PathVariable String username, @PathVariable long id, @RequestBody Employee employee) {
+    public ResponseEntity<Employee> updateEmployee(@PathVariable String username, @PathVariable long id, @RequestBody Employee employee) {
         Employee employeeUpdated = employeeService.save(employee);
         return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+    }
+
+    // Create an employee
+    // PUT /users/{username}/employees/{id}
+    @PostMapping("/users/{username}/employees/")
+    public ResponseEntity<Void> updateEmployee(@PathVariable String username, @RequestBody Employee employee) {
+        Employee employeeCreated = employeeService.save(employee);
+
+        // Location
+        // Get current resource url
+        // {id}
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(employeeCreated.getId()).toUri();
+
+        return ResponseEntity.created(uri).build();
     }
 }

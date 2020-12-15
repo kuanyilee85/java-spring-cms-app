@@ -12,6 +12,11 @@ public class Employee {
     private boolean isOnBoard;
     private String note;
 
+    // default constructor for CREATE
+    protected Employee() {
+
+    }
+
     public Employee(long id, String firstname, String lastname, String title, String department, Date hireDate, boolean isOnBoard, String note) {
         super();
         this.id = id;

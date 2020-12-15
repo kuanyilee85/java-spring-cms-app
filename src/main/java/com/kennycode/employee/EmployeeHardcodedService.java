@@ -22,7 +22,7 @@ public class EmployeeHardcodedService {
     }
 
     public Employee save(Employee employee) {
-        if(employee.getId() == -1) {
+        if(employee.getId() == -1 || employee.getId() == 0) {
             // CREATE; new data (id == -1) without id, set an id
             employee.setId(++idCounter);
             employees.add(employee);
