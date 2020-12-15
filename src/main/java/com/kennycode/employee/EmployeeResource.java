@@ -14,9 +14,16 @@ public class EmployeeResource {
     private EmployeeHardcodedService employeeService;
 
     // in real case, replaced with JPA/hibernate API
+    // get all employee
     @GetMapping("users/{username}/employees")
-    public List<Employee> getAllEmployees(@PathVariable String username){
+    public List<Employee> getAllEmployee(@PathVariable String username){
         return employeeService.findAll();
+    }
+
+    //get specific employee
+    @GetMapping("users/{username}/employees/{id}")
+    public Employee getEmployee(@PathVariable String username, @PathVariable long id){
+        return employeeService.findById(id);
     }
 
     // DELETE /users/{user_name}/employees/{id}
