@@ -21,6 +21,19 @@ public class EmployeeHardcodedService {
         return employees;
     }
 
+    public Employee save(Employee employee) {
+        if(employee.getId() == -1) {
+            // CREATE; new data (id == -1) without id, set an id
+            employee.setId(++idCounter);
+            employees.add(employee);
+        } else {
+            // UPDATE; old data with id, delete then add
+            deleteById(employee.getId());
+            employees.add(employee);
+        }
+        return employee;
+    }
+
     public Employee deleteById(long id) {
         Employee employee = findById(id);
 
