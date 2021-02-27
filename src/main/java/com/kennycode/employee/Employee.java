@@ -12,6 +12,7 @@ public class Employee {
     @GeneratedValue
     private Long id;
 
+    private String username;
     private String firstname;
     private String lastname;
     private String title;
@@ -25,9 +26,10 @@ public class Employee {
 
     }
 
-    public Employee(long id, String firstname, String lastname, String title, String department, Date hireDate, boolean isOnBoard, String note) {
+    public Employee(long id, String username, String firstname, String lastname, String title, String department, Date hireDate, boolean isOnBoard, String note) {
         super();
         this.id = id;
+        this.username = username;
         this.firstname = firstname;
         this.lastname = lastname;
         this.title = title;
@@ -43,6 +45,14 @@ public class Employee {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getFirstname() {
