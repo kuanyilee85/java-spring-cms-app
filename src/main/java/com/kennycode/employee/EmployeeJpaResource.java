@@ -14,8 +14,8 @@ import java.util.List;
 @RestController
 public class EmployeeJpaResource {
 
-    @Autowired
-    private EmployeeHardcodedService employeeService;
+//    @Autowired
+//    private EmployeeHardcodedService employeeService;
 
     @Autowired
     private EmployeeJpaRepository employeeJpaRepository;
@@ -23,14 +23,19 @@ public class EmployeeJpaResource {
     // replaced with JPA/hibernate API in real case
     // READ / get all employee
     @GetMapping("/jpa/users/{username}/employees")
-    public List<Employee> getAllEmployee(@PathVariable String username){
+    public List<Employee> getAllEmployee(
+            @PathVariable String username){
+
         return employeeJpaRepository.findByUsername(username);
 //        return employeeService.findAll();
     }
 
     // READ / get specific employee
     @GetMapping("/jpa/users/{username}/employees/{id}")
-    public Employee getEmployee(@PathVariable String username, @PathVariable long id){
+    public Employee getEmployee(
+            @PathVariable String username,
+            @PathVariable long id){
+
         return employeeJpaRepository.findById(id).get();
 //        return employeeService.findById(id);
     }
@@ -38,33 +43,45 @@ public class EmployeeJpaResource {
     // DELETE /users/{user_name}/employees/{id}
     @DeleteMapping("/jpa/users/{username}/employees/{id}")
     // ResponseEntity return http status code, etc.
-    public ResponseEntity<Void> deleteEmployee(@PathVariable String username, @PathVariable long id) {
-        Employee employee = employeeService.deleteById(id);
+    public ResponseEntity<Void> deleteEmployee(
+            @PathVariable String username,
+            @PathVariable long id) {
 
-        if(employee != null) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.notFound().build();
+        employeeJpaRepository.deleteById(id);
+
+        return ResponseEntity.noContent().build();
     }
 
-    // Update an employee
+    // UPDATE an employee
     // PUT /users/{username}/employees/{id}
     @PutMapping("/jpa/users/{username}/employees/{id}")
-    public ResponseEntity<Employee> updateEmployee(@PathVariable String username, @PathVariable long id, @RequestBody Employee employee) {
-        Employee employeeUpdated = employeeService.save(employee);
+    public ResponseEntity<Employee> updateEmployee(
+            @PathVariable String username,
+            @PathVariable long id,
+            @RequestBody Employee employee) {
+
+        employee.setUsername(username);
+
+        Employee employeeUpdated = employeeJpaRepository.save(employee);
         return new ResponseEntity<Employee>(employee, HttpStatus.OK);
     }
 
-    // Create an employee
+    // CREATE an employee
     // PUT /users/{username}/employees/{id}
     @PostMapping("/jpa/users/{username}/employees/")
-    public ResponseEntity<Void> updateEmployee(@PathVariable String username, @RequestBody Employee employee) {
-        Employee employeeCreated = employeeService.save(employee);
+    public ResponseEntity<Void> createEmployee(
+            @PathVariable String username,
+            @RequestBody Employee employee) {
+
+        employee.setUsername(username);
+
+        Employee createdEmployee = employeeJpaRepository.save(employee);
 
         // Location
         // Get current resource url
         // {id}
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(employeeCreated.getId()).toUri();
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}").buildAndExpand(createdEmployee.getId()).toUri();
 
         return ResponseEntity.created(uri).build();
     }
